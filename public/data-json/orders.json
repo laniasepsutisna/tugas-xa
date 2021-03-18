@@ -8,5 +8,15 @@
         "order_email": "asep@jakarta.com",
         "order_date": "09-01-2021",
         "order_status": "09-01-2021"
+    },
+    {
+        "id": "54dc2ad0-8809-11eb-9fc0-3f66cb4fa22f",
+        "customer_id": "a7f27460-87f5-11eb-8d0c-7676754",
+        "amount": "Facere sed voluptate",
+        "shipping_address": "Est aut corrupti u",
+        "order_address": "Quibusdam accusantiu",
+        "order_email": "razik@mailinator.com",
+        "order_date": "1973-08-05",
+        "order_status": "order"
     }
 ]

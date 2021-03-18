@@ -1,0 +1,38 @@
+[
+    {
+        "id": "a7f27460-87f5-11eb-8d0c-343434434",
+        "name": "Lani Asep Sutisna",
+        "email": "asep@mail.com",
+        "password": "12345",
+        "country": "Indonesia",
+        "default_shipping_address": "Jakarta",
+        "phone": "08239302302"
+    },
+    {
+        "id": "a7f27460-87f5-11eb-8d0c-232434",
+        "name": "Ahmad Nugraha",
+        "email": "ahmad@mail.com",
+        "password": "0940934",
+        "country": "Indonesia",
+        "default_shipping_address": "Palembang",
+        "phone": "08239302342"
+    },
+    {
+        "id": "a7f27460-87f5-11eb-8d0c-65676",
+        "name": "Intan Putri",
+        "email": "putri@mail.com",
+        "password": "0940934",
+        "country": "Indonesia",
+        "default_shipping_address": "Palembang",
+        "phone": "08239302342"
+    },
+    {
+        "id": "a7f27460-87f5-11eb-8d0c-7676754",
+        "name": "Indra",
+        "email": "indra@mail.com",
+        "password": "0940934",
+        "country": "Indonesia",
+        "default_shipping_address": "Palembang",
+        "phone": "08239302342"
+    }
+]
