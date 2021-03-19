@@ -77,6 +77,7 @@
                         <tr>
                             <th class="text-center">#</th>
                             <th class="text-center">Item Product</th>
+                            <th class="text-center">Price</th>
                             <th class="text-center">QTY</th>
                             <th class="text-center">Remove</th>
                         </tr>
@@ -113,6 +114,7 @@
                     <tr id="R${++rowIdx}">
                         <td class="text-center">${rowIdx}</td>
                         <td class="row-index text-center"><select name="product_id[]" class="form-control"> <option disabled selected>Pilih Product</option> @foreach($products as $row) <option value="{{ $row['id'] }}">{{ $row['title'] }}</option> @endforeach </select></td>
+                        <td class="row-index text-center"><input type="text" name="price[]" class="form-control" placeholder="Input Price"></td>
                         <td class="row-index text-center"><input type="text" name="quantity[]" class="form-control" placeholder="Input Quantity"></td>
                         <td class="text-center"><button class="btn btn-danger btn-sm remove" type="button">Remove</button></td>
                     </tr>`);

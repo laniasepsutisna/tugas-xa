@@ -46,7 +46,7 @@
         @forelse($orders as $row)
             <tr>
                 <th scope="row">{{ $loop->iteration  }}</th>
-                <td><a href="{{ route('orders.edit', $row['id'])  }}">{{ $row['customer_id']  }}</a></td>
+                <td><a href="{{ route('orders.edit', $row['id'])  }}">{{ $row['customer_name']  }}</a></td>
                 <td>{{ $row['amount']  }}</td>
                 <td>{{ $row['shipping_address']  }}</td>
                 <td>{{ $row['order_address']  }}</td>

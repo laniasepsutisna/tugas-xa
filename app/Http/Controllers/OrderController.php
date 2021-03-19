@@ -20,8 +20,6 @@ class OrderController extends Controller
         $this->orders_details = json_decode(file_get_contents($this->path_order_detail), true);
     }
 
-    //TODO Membuat relasi dengan nama customer,
-    //TODO Membuat halama show detail order
     //TODO Update order
     //TODO Delete order
     //TODO Reporting order
@@ -33,6 +31,26 @@ class OrderController extends Controller
     public function index()
     {
         $orders = $this->orders;
+        $data = [];
+        foreach ($orders as $key => $order){
+            foreach ($this->customers as $customer){
+                if($order['customer_id'] == $customer['id']){
+                    $data[$key] = [
+                        'id' => $order['id'],
+                        'customer_id' => $customer['id'],
+                        'customer_name' => $customer['name'],
+                        'amount' => $order['amount'],
+                        'shipping_address' => $order['shipping_address'],
+                        'order_address' => $order['order_address'],
+                        'order_email' => $order['order_email'],
+                        'order_date' => $order['order_date'],
+                        'order_status' => $order['order_status'],
+                    ];
+                }
+            }
+        }
+
+        $orders = $data;
         return view('orders.index', compact('orders'));
     }
 
@@ -80,9 +98,9 @@ class OrderController extends Controller
         foreach ($request->product_id as $key => $row){
             $orders_detail2[] = [
                 'id' => Uuid::generate()->string,
-                'order_id' => $orders2[0]['id'],
-                'order_id' => $request->product_id[$key],
-                'price' => null,
+                'order_id' => end($data1)['id'],
+                'product_id' => $request->product_id[$key],
+                'price' => $request->price[$key],
                 'quantity' => $request->quantity[$key],
             ];
         }
@@ -95,6 +113,75 @@ class OrderController extends Controller
         file_put_contents(public_path('data-json/orders-details.json'), stripslashes($newJsonString));
 
         Session::flash('success','Data berhasil disimpan dalam bentuk json');
+
+        return redirect(route('orders.index'));
+    }
+
+    /**
+     * Assign mass data variable.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $products = $this->products;
+        $customers = $this->customers;
+        $orders = $this->orders;
+        $order_details_o = $this->orders_details;
+        foreach ($orders as $order){
+            if($id == $order['id']){
+                $order = $order;
+            }
+        }
+
+        foreach ($order_details_o as $key => $order_detail){
+            if($order_detail['order_id'] == $id){
+                $order_details[$key] = $order_detail;
+            }
+        }
+
+        return view('orders.edit', compact('order', 'order_details', 'customers', 'products'));
+    }
+
+    /**
+     * Assign mass data variable.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $orders = $this->orders;
+        foreach ($orders  as $key => $order){
+            if($id == $order['id']){
+                $orders[$key]['customer_id'] = $request->customer_id;
+                $orders[$key]['amount'] = $request->amount;
+                $orders[$key]['shipping_address'] = $request->shipping_address;
+                $orders[$key]['order_address'] = $request->order_address;
+                $orders[$key]['order_email'] = $request->order_email;
+                $orders[$key]['order_date'] = $request->order_date;
+            }
+        }
+
+        $newJsonString = json_encode($orders, JSON_PRETTY_PRINT);
+        file_put_contents($this->path, stripslashes($newJsonString));
+
+        //store order detail
+        $orders_details = $this->orders_details;
+        foreach ($request->product_id as $key => $row){
+            if($request->order_id[$key] == $order['id']){
+                $orders_details[$key]['id'] = $request->order_detail_id[$key];
+                $orders_details[$key]['order_id'] = $request->order_id[$key];
+                $orders_details[$key]['product_id'] = $request->product_id[$key];
+                $orders_details[$key]['price'] = $request->price[$key];
+                $orders_details[$key]['quantity'] = $request->quantity[$key];
+            }
+        }
+
+        //write file order
+        $newJsonString = json_encode($orders_details, JSON_PRETTY_PRINT);
+        file_put_contents(public_path('data-json/orders-details.json'), stripslashes($newJsonString));
+
+        Session::flash('success','Data berhasil diupdate dalam bentuk json');
 
         return redirect(route('orders.index'));
     }
