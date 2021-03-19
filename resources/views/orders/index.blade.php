@@ -39,7 +39,6 @@
             <th scope="col">order email</th>
             <th scope="col">order date</th>
             <th scope="col">order status</th>
-            <th scope="col">aksi</th>
         </tr>
         </thead>
         <tbody>
@@ -53,13 +52,6 @@
                 <td>{{ $row['order_email']  }}</td>
                 <td>{{ $row['order_date']  }}</td>
                 <td>{{ $row['order_status']  }}</td>
-                <td>
-                    <form action="{{ route('orders.destroy', $row['id']) }}" method="post">
-                        <input class="btn btn-danger btn-sm" type="submit" value="Delete" />
-                        <input type="hidden" name="_method" value="delete" />
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                    </form>
-                </td>
             </tr>
         @empty
             <tr>

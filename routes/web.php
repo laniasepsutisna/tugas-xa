@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\FileJsonController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -22,3 +24,5 @@ Route::get('/', function () {
 
 Route::resource('products', ProductController::class);
 Route::resource('orders', OrderController::class);
+Route::get('/orders/invoice/{id}', [OrderController::class, 'invoice'])->name('orders.invoice');
+Route::resource('file-json', FileJsonController::class);

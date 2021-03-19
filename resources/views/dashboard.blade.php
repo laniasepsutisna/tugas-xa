@@ -23,6 +23,5 @@
 @endsection
 
 @push('js')
-    <script src="https://getbootstrap.com/docs/5.0/examples/dashboard/dashboard.js"></script>
     <script></script>
 @endpush

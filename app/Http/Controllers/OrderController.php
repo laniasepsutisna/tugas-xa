@@ -128,9 +128,9 @@ class OrderController extends Controller
         $customers = $this->customers;
         $orders = $this->orders;
         $order_details_o = $this->orders_details;
-        foreach ($orders as $order){
-            if($id == $order['id']){
-                $order = $order;
+        foreach ($orders as $item){
+            if($id == $item['id']){
+                $order = $item;
             }
         }
 
@@ -184,6 +184,65 @@ class OrderController extends Controller
         Session::flash('success','Data berhasil diupdate dalam bentuk json');
 
         return redirect(route('orders.index'));
+    }
+
+    /**
+     * Assign mass data variable.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function invoice($id)
+    {
+        $products = $this->products;
+        $customers = $this->customers;
+        $orders = $this->orders;
+        $order_details_o = $this->orders_details;
+        foreach ($orders as $item){
+            foreach ($this->customers as $customer){
+                if($item['customer_id'] == $customer['id']){
+                    if($id == $item['id']){
+                        $order = [
+                            'id' => $item['id'],
+                            'customer_id' => $customer['id'],
+                            'customer_name' => $customer['name'],
+                            'email' => $customer['email'],
+                            'country' => $customer['country'],
+                            'default_shipping_address' => $customer['default_shipping_address'],
+                            'phone' => $customer['phone'],
+                            'amount' => $item['amount'],
+                            'shipping_address' => $item['shipping_address'],
+                            'order_address' => $item['order_address'],
+                            'order_email' => $item['order_email'],
+                            'order_date' => $item['order_date'],
+                            'order_status' => $item['order_status'],
+                        ];
+                    }
+                }
+            }
+        }
+
+        foreach ($order_details_o as $key => $item){
+            foreach ($products as $product){
+                if($item['product_id'] == $product['id']){
+                    if($item['order_id'] == $id){
+                        $order_detail[$key] = [
+                            'id' => $item['id'],
+                            'order_id' => $item['order_id'],
+                            'product_id' => $item['product_id'],
+                            'product_name' => $product['title'],
+                            'description' => $product['description'],
+                            'price' => $item['price'],
+                            'quantity' => $item['quantity'],
+                            'height' => $product['height'],
+                            'width' => $product['width'],
+                            'rating' => $product['rating'],
+                        ];
+                    }
+                }
+            }
+        }
+
+        return view('orders.invoice', compact('order', 'order_detail'));
     }
 
 }

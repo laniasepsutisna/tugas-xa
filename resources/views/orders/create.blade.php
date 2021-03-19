@@ -28,7 +28,7 @@
                     <div class="col-6">
                         <div class="form-group mb-3">
                             <label>Amount</label>
-                            <input type="text" name="amount" class="form-control" placeholder="Input Amount">
+                            <input type="number" name="amount" class="form-control" placeholder="Input Amount">
                             <small class="form-text text-muted">Input untuk type dari amount yang akan ditampilkan.</small>
                         </div>
                     </div>

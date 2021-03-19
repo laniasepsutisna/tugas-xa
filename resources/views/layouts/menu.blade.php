@@ -20,9 +20,9 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ url('reports')  }}">
-                    <span data-feather="users"></span>
-                    Reports
+                <a class="nav-link" href="{{ url('file-json')  }}">
+                    <span data-feather="file"></span>
+                    File Json
                 </a>
             </li>
         </ul>

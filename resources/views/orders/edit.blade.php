@@ -9,14 +9,21 @@
         @method('PUT')
         <div class="card" style="margin-top: 20px;">
             <div class="card-header">
-                <h4 class="card-title">Oder Information</h4>
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h3 class="h3">Order Information</h3>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="btn-group me-2">
+                            <a href="{{ route('orders.invoice', $order['id']) }}" class="btn btn-sm btn-outline-secondary" target="_blank">Print Invoice</a>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group mb-3">
                             <label>Customer</label>
-                            <select name="customer_id" class="form-control">
+                            <select name="customer_id" class="form-control" readonly>
                                 <option disabled selected>Pilih Customer</option>
                                 @foreach($customers as $row)
                                     <option value="{{ $row['id']  }}" {{ $row['id'] == $order['customer_id'] ? 'selected' : '' }}>{{ $row['name'] }}</option>
@@ -28,35 +35,35 @@
                     <div class="col-6">
                         <div class="form-group mb-3">
                             <label>Amount</label>
-                            <input type="text" name="amount" class="form-control" placeholder="Input Amount" value="{{ $order['amount'] }}">
+                            <input type="number" name="amount" class="form-control" placeholder="Input Amount" value="{{ $order['amount'] }}" readonly>
                             <small class="form-text text-muted">Input untuk type dari amount yang akan ditampilkan.</small>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group mb-3">
                             <label>Ahipping Address</label>
-                            <input type="text" name="shipping_address" class="form-control" value="{{ $order['shipping_address'] }}" placeholder="Input Shipping Address">
+                            <input type="text" name="shipping_address" class="form-control" value="{{ $order['shipping_address'] }}" placeholder="Input Shipping Address" readonly>
                             <small class="form-text text-muted">Input untuk shipping address dari order yang akan ditampilkan.</small>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group mb-3">
                             <label>Order Address</label>
-                            <input type="text" name="order_address" class="form-control" value="{{ $order['order_address'] }}" placeholder="Order Address">
+                            <input type="text" name="order_address" class="form-control" value="{{ $order['order_address'] }}" placeholder="Order Address" readonly>
                             <small class="form-text text-muted">Input untuk height dari order address yang akan ditampilkan.</small>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group mb-3">
                             <label>Order Email</label>
-                            <input type="email" name="order_email" class="form-control" value="{{ $order['order_email'] }}" placeholder="Input Order Email">
+                            <input type="email" name="order_email" class="form-control" value="{{ $order['order_email'] }}" placeholder="Input Order Email" readonly>
                             <small class="form-text text-muted">Input untuk order_email dari order yang akan ditampilkan.</small>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group mb-3">
                             <label>Erder Date</label>
-                            <input type="date" name="order_date" class="form-control" value="{{ $order['order_date'] }}" placeholder="Input Date">
+                            <input type="date" name="order_date" class="form-control" value="{{ $order['order_date'] }}" placeholder="Input Date" readonly>
                             <small class="form-text text-muted">Input untuk order date dari order yang akan ditampilkan.</small>
                         </div>
                     </div>
@@ -78,27 +85,28 @@
                             <th class="text-center">Item Product</th>
                             <th class="text-center">Price</th>
                             <th class="text-center">QTY</th>
-                            <th class="text-center">Remove</th>
                         </tr>
                         </thead>
                         <tbody id="tbody">
-                            @foreach($order_details as $item)
+                            @foreach($order_details as $key => $item)
                                 <tr>
                                     <td class="text-center">{{ $loop->iteration  }}<input name="order_detail_id[]" hidden value="{{ $item['id']  }}"><input name="order_id[]" hidden value="{{ $item['order_id']  }}"></td>
-                                    <td class="row-index text-center"><select name="product_id[]" class="form-control"> <option disabled selected>Pilih Product</option> @foreach($products as $row) <option value="{{ $row['id'] }}" {{  $item['product_id'] == $row['id'] ? 'selected' : '' }}>{{ $row['title'] }}</option> @endforeach </select></td>
-                                    <td class="row-index text-center"><input type="text" name="price[]" class="form-control" value="{{ $item['price'] }}" placeholder="Input Price"></td>
-                                    <td class="row-index text-center"><input type="text" name="quantity[]" class="form-control" value="{{ $item['quantity'] }}" placeholder="Input Quantity"></td>
-                                    <td class="text-center"><button class="btn btn-danger btn-sm remove" type="button">Remove</button></td>
+                                    <td class="row-index text-center"><select name="product_id[]" class="form-control" readonly> <option disabled selected>Pilih Product</option> @foreach($products as $row) <option value="{{ $row['id'] }}" {{  $item['product_id'] == $row['id'] ? 'selected' : '' }}>{{ $row['title'] }}</option> @endforeach </select></td>
+                                    <td class="row-index text-center"><label for="">Rp.{{ $a[] = $item['price'] }}</label></td>
+                                    <td class="row-index text-center"><label for="">{{ $b[] = $item['quantity'] }} Pcs</label></td>
                                 </tr>
                             @endforeach
+                            <tr>
+                                <td class="row-index text-center text-middle" colspan="2" rowspan="2"><label for="">Total Order</label></td>
+                                <td class="row-index text-center"><label for="">Rp.{{ array_sum($a) }}</label></td>
+                                <td class="row-index text-center"><label for="">{{ array_sum($b) }} Pcs</label></td>
+                            </tr>
                         </tbody>
                     </table>
-                    <button class="btn btn-md btn-primary" id="addBtn" type="button">Add New Product</button>
                 </div>
 
                 <div class="form-group mt-4" style="margin-buttom: 20px;">
                     <a href="{{ route('orders.index') }}" class="btn btn-secondary">Kembali</a>
-                    <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
             </div>
         </div>
