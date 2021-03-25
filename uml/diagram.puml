@@ -1,0 +1,57 @@
+@startuml
+
+' hide the spot
+hide circle
+
+' avoid problems with angled crows feet
+skinparam linetype ortho
+
+entity "Customer" as e01 {
+  *id : number <<generated>>
+  --
+  name : text
+  email : text
+  password : text
+  country : text
+  default_shipping_address : text
+  phone : text
+}
+
+entity "Order" as e02 {
+  *id : number <<generated>>
+  --
+  customer_id : number <<FK>>
+  amount : number
+  shipping_address : text
+  order_address : text
+  order_email : text
+  order_date : text
+  order_status : text
+}
+
+entity "Order Detail" as e03 {
+  *id : number <<generated>>
+  --
+  order_id : number <<FK>>
+  product_id : number <<FK>>
+  price : text
+  quantity : text
+}
+
+entity "Product" as e04 {
+  *id : number <<generated>>
+  --
+  titles : text
+  type : text
+  descriptions : text
+  height : text
+  width : text
+  price : text
+  rating : text
+}
+
+e01 }|..|| e02
+e02 }|..|| e03
+e03 |o..o{ e04
+
+@enduml
