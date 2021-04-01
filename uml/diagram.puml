@@ -50,8 +50,8 @@ entity "Product" as e04 {
   rating : text
 }
 
-e01 }|..|| e02
+e02 }|..|| e01
+e04 |o..o{ e03
 e02 }|..|| e03
-e03 |o..o{ e04
 
 @enduml
