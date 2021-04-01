@@ -24,5 +24,6 @@ Route::get('/', function () {
 
 Route::resource('products', ProductController::class);
 Route::resource('orders', OrderController::class);
+Route::get('/orders/sort/{on}',         [OrderController::class, 'sorting'])->name('orders.sort');
 Route::get('/orders/invoice/{id}', [OrderController::class, 'invoice'])->name('orders.invoice');
 Route::resource('file-json', FileJsonController::class);

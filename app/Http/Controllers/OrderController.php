@@ -245,4 +245,74 @@ class OrderController extends Controller
         return view('orders.invoice', compact('order', 'order_detail'));
     }
 
+    /**
+     * Code Bubble Sorting.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    function sorting($on, $order=SORT_ASC)
+    {
+        //data array order
+        $orders = $this->orders;
+
+        //logic bubble sorting : AMOUNT
+       if ($on == 1){
+           do
+           {
+               $tukar = false;
+               for( $i = 0, $c = count( $orders ) - 1; $i < $c; $i++ )
+               {
+                   //jika amount i kurang dari mount + i
+                   if( $orders[$i]['amount'] < $orders[$i + 1]['amount'] )
+                   {
+                       //maka akan disusun array yang + i dengan isi order mount yg ke i
+                       list( $orders[$i + 1]['amount'], $orders[$i]['amount'] ) = array( $orders[$i]['amount'], $orders[$i + 1]['amount'] );
+                       $tukar = true;
+                   }
+               }
+           }
+           while( $tukar );
+       }else if($on == 2){
+           do
+           {
+               $tukar = false;
+               for( $i = 0, $c = count( $orders ) - 1; $i < $c; $i++ )
+               {
+                   //jika amount i kurang dari mount + i
+                   if( $orders[$i]['order_date'] < $orders[$i + 1]['order_date'] )
+                   {
+                       //maka akan disusun array yang + i dengan isi order mount yg ke i
+                       list( $orders[$i + 1]['order_date'], $orders[$i]['order_date'] ) = array( $orders[$i]['order_date'], $orders[$i + 1]['order_date'] );
+                       $tukar = true;
+                   }
+               }
+           }
+           while( $tukar );
+       }
+
+        //logic relasi dengan data customer
+        $data = [];
+        foreach ($orders as $key => $order){
+            foreach ($this->customers as $customer){
+                if($order['customer_id'] == $customer['id']){
+                    $data[$key] = [
+                        'id' => $order['id'],
+                        'customer_id' => $customer['id'],
+                        'customer_name' => $customer['name'],
+                        'amount' => $order['amount'],
+                        'shipping_address' => $order['shipping_address'],
+                        'order_address' => $order['order_address'],
+                        'order_email' => $order['order_email'],
+                        'order_date' => $order['order_date'],
+                        'order_status' => $order['order_status'],
+                    ];
+                }
+            }
+        }
+
+        $orders = $data;
+
+        return view('orders.index', compact('orders'));
+
+    }
 }

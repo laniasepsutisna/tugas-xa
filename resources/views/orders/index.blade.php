@@ -5,7 +5,22 @@
 @section('content')
 
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Orders</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <h1 class="h2">Orders</h1>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        Bubble Sort
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" href="{{ route('orders.sort', 1) }}">Sort By Amount</a></li>
+                        <li><a class="dropdown-item" href="{{ route('orders.sort', 2) }}">Sort By Order Date</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group me-2">
                 <a href="{{ route('orders.create')  }}" class="btn btn-sm btn-outline-secondary">Tambah Order</a>
