@@ -278,10 +278,10 @@ class OrderController extends Controller
                $tukar = false;
                for( $i = 0, $c = count( $orders ) - 1; $i < $c; $i++ )
                {
-                   //jika amount i kurang dari mount + i
+                   //jika order_date i kurang dari order_date + i
                    if( $orders[$i]['order_date'] < $orders[$i + 1]['order_date'] )
                    {
-                       //maka akan disusun array yang + i dengan isi order mount yg ke i
+                       //maka akan disusun array yang + i dengan isi order_date mount yg ke i
                        list( $orders[$i + 1]['order_date'], $orders[$i]['order_date'] ) = array( $orders[$i]['order_date'], $orders[$i + 1]['order_date'] );
                        $tukar = true;
                    }
